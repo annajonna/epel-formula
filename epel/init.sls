@@ -5,8 +5,8 @@
 install_pubkey_epel:
   file.managed:
     - name: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL{{ '-' ~ salt['grains.get']('osmajorrelease') }}
-    - source: {{ epel.key }}
-    - source_hash:  {{ epel.key_hash }}
+    - source: {{ epel.pubkey }}
+    - source_hash:  {{ epel.pubkey_hash }}
 
 epel_release:
   pkg.installed:
