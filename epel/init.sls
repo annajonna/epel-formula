@@ -4,9 +4,9 @@
 
 install_pubkey_epel:
   file.managed:
-    - name: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL{{ '-' ~ salt['grains.get']('osmajorrelease') }}
-    - source: {{ epel.pubkey }}
-    - source_hash:  {{ epel.pubkey_hash }}
+    - name: /etc/pki/rpm-gpg/{{ epel.key_name }}
+    - source: {{ epel.key }}
+    - source_hash:  {{ epel.key_hash }}
 
 epel_release:
   pkg.installed:
@@ -19,8 +19,8 @@ set_pubkey_epel:
   file.replace:
     - append_if_not_found: True
     - name: /etc/yum.repos.d/epel.repo
-    - repl: "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL{{ '-' ~ salt['grains.get']('osmajorrelease') }}"
     - pattern: '^\s*gpgkey=.*'
+    - repl: 'gpgkey=file:///etc/pki/rpm-gpg/{{ epel.key_name }}'
     - require:
       - pkg: epel_release
 
