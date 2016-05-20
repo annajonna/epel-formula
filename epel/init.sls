@@ -34,16 +34,22 @@ set_gpg_epel:
       - pkg: epel_release
 
 {%   if salt['pillar.get']('epel:disabled', False) %}
-disable_epel:
+{%     for entry in ['epel', 'epel-debuginfo', 'epel-source'] %}
+disable_{{ entry }}:
   file.replace:
     - name: /etc/yum.repos.d/epel.repo
-    - pattern: '^enabled=[0,1]'
-    - repl: 'enabled=0'
+    - pattern: '\[{{ entry }}\](.*?)enabled=[01]'
+    - repl: '\[{{ entry }}\]\1enabled=0'
+    - flags: ['DOTALL']
+{%     endfor %}
 {%   else %}
-enable_epel:
+{%     for entry in ['epel', 'epel-debuginfo', 'epel-source'] %}
+enable_{{ entry }}:
   file.replace:
     - name: /etc/yum.repos.d/epel.repo
-    - pattern: '^enabled=[0,1]'
-    - repl: 'enabled=1'
+    - pattern: '\[{{ entry }}\](.*?)enabled=[01]'
+    - repl: '\[{{ entry }}\]\1enabled=0'
+    - flags: ['DOTALL']
+{%     endfor %}
 {%   endif %}
 {% endif %}
