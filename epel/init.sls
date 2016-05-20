@@ -33,7 +33,6 @@ set_gpg_epel:
     - require:
       - pkg: epel_release
 
-{#{%   if salt['pillar.get']('epel:disabled', False) %}#}
 {%   for entry in epel.disabled %}
 disable_{{ entry }}:
   file.replace:
