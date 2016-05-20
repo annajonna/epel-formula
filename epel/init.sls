@@ -33,17 +33,17 @@ set_gpg_epel:
     - require:
       - pkg: epel_release
 
-{%   if salt['pillar.get']('epel:disabled', False) %}
+{%   if epel.disabled %}
 disable_epel:
   file.replace:
     - name: /etc/yum.repos.d/epel.repo
-    - pattern: '^enabled=[0,1]'
+    - pattern: '^enabled=[01]'
     - repl: 'enabled=0'
 {%   else %}
 enable_epel:
   file.replace:
     - name: /etc/yum.repos.d/epel.repo
-    - pattern: '^enabled=[0,1]'
+    - pattern: '^enabled=[01]'
     - repl: 'enabled=1'
 {%   endif %}
 {% endif %}
