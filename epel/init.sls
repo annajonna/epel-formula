@@ -19,8 +19,8 @@ set_pubkey_epel:
   file.replace:
     - append_if_not_found: True
     - name: /etc/yum.repos.d/epel.repo
-    - pattern: '^gpgkey=.*'
     - repl: "gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL{{ '-' ~ salt['grains.get']('osmajorrelease') }}"
+    - pattern: '^\s*gpgkey=.*'
     - require:
       - pkg: epel_release
 
@@ -28,7 +28,7 @@ set_gpg_epel:
   file.replace:
     - append_if_not_found: True
     - name: /etc/yum.repos.d/epel.repo
-    - pattern: 'gpgcheck=.*'
+    - pattern: '^\s*gpgcheck=.*'
     - repl: 'gpgcheck=1'
     - require:
       - pkg: epel_release
