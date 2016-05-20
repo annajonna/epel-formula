@@ -4,7 +4,7 @@
 
 install_pubkey_epel:
   file.managed:
-    - name: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL
+    - name: /etc/pki/rpm-gpg/{{ epel.key_name }}
     - source: {{ epel.key }}
     - source_hash:  {{ epel.key_hash }}
 
@@ -20,7 +20,7 @@ set_pubkey_epel:
     - append_if_not_found: True
     - name: /etc/yum.repos.d/epel.repo
     - pattern: '^\s*gpgkey=.*'
-    - repl: 'gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL'
+    - repl: "gpgkey=file:///etc/pki/rpm-gpg/{{ epel.key_name }}"
     - require:
       - pkg: epel_release
 
