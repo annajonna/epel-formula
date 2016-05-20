@@ -20,7 +20,7 @@ set_pubkey_epel:
     - append_if_not_found: True
     - name: /etc/yum.repos.d/epel.repo
     - pattern: '^\s*gpgkey=.*'
-    - repl: "gpgkey=file:///etc/pki/rpm-gpg/{{ epel.key_name }}"
+    - repl: 'gpgkey=file:///etc/pki/rpm-gpg/{{ epel.key_name }}'
     - require:
       - pkg: epel_release
 
