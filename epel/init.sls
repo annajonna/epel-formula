@@ -33,23 +33,43 @@ set_gpg_epel:
     - require:
       - pkg: epel_release
 
-{%   if salt['pillar.get']('epel:disabled', False) %}
-{%     for entry in ['epel', 'epel-debuginfo', 'epel-source'] %}
+{#{%   if salt['pillar.get']('epel:disabled', False) %}#}
+{%     for entry in epel.disabled %}
 disable_{{ entry }}:
   file.replace:
     - name: /etc/yum.repos.d/epel.repo
     - pattern: '\[{{ entry }}\](.*?)enabled=[01]'
-    - repl: '\[{{ entry }}\]\1enabled=0'
+    - repl: '[{{ entry }}]\1enabled=0'
     - flags: ['DOTALL']
 {%     endfor %}
-{%   else %}
-{%     for entry in ['epel', 'epel-debuginfo', 'epel-source'] %}
+{#{%   else %}#}
+{%     for entry in epel.enabled %}
 enable_{{ entry }}:
   file.replace:
     - name: /etc/yum.repos.d/epel.repo
     - pattern: '\[{{ entry }}\](.*?)enabled=[01]'
-    - repl: '\[{{ entry }}\]\1enabled=0'
+    - repl: '[{{ entry }}]\1enabled=1'
+    - flags: ['DOTALL']
+{%     endfor %}
+{#{%   endif %}#}
+
+{%   if epel.testing %}
+{%     for entry in epel.disabled %}
+disable_{{ entry }}:
+  file.replace:
+    - name: /etc/yum.repos.d/epel-testing.repo
+    - pattern: '\[{{ entry }}\](.*?)enabled=[01]'
+    - repl: '[{{ entry }}]\1enabled=0'
+    - flags: ['DOTALL']
+{%     endfor %}
+{%     for entry in epel.enabled %}
+enable_{{ entry }}:
+  file.replace:
+    - name: /etc/yum.repos.d/epel-testing.repo
+    - pattern: '\[{{ entry }}-testing\](.*?)enabled=[01]'
+    - repl: '[{{ entry }}-testing]\1enabled=1'
     - flags: ['DOTALL']
 {%     endfor %}
 {%   endif %}
+
 {% endif %}

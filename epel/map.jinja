@@ -31,3 +31,11 @@
   },
 }, grain='osmajorrelease', merge=salt['pillar.get']('epel:lookup')) -%}
 {% endif -%}
+{% do epel.update({
+  'enabled': ['epel'],
+  'disabled': ['epel-debuginfo', 'epel-source'],
+  'testing': false,
+  'testing_enabled': ['epel-testing'],
+  'testing_disabled': ['epel-testing-debuginfo', 'epel-testing-source']
+}) -%}
+{% set epel = salt['pillar.get']('epel:lookup', default=epel, merge=True) -%}
