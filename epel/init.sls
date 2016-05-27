@@ -35,13 +35,13 @@ set_gpg_epel:
 
 {%   for entry in epel.disabled %}
 disable_{{ entry }}:
-  pkg.mod_repo:
+  pkgrepo.managed:
     - name: {{ entry }}
     - enable: 0
 {%   endfor %}
 {%   for entry in epel.enabled %}
 enable_{{ entry }}:
-  pkg.mod_repo:
+  pkgrepo.managed:
     - name: {{ entry }}
     - enable: 1
 {%   endfor %}
