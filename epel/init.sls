@@ -35,14 +35,38 @@ set_gpg_epel:
 
 {%   for entry in epel.disabled %}
 disable_{{ entry }}:
-  pkgrepo.managed:
-    - name: {{ entry }}
-    - enable: 0
+  file.replace:
+    - name: /etc/yum.repos.d/epel.repo
+    - pattern: '\[{{ entry }}\](.*?)enabled=[01]'
+    - repl: '[{{ entry }}]\1enabled=0'
+    - flags: ['DOTALL']
 {%   endfor %}
 {%   for entry in epel.enabled %}
 enable_{{ entry }}:
-  pkgrepo.managed:
-    - name: {{ entry }}
-    - enable: 1
+  file.replace:
+    - name: /etc/yum.repos.d/epel.repo
+    - pattern: '\[{{ entry }}\](.*?)enabled=[01]'
+    - repl: '[{{ entry }}]\1enabled=1'
+    - flags: ['DOTALL']
 {%   endfor %}
+
+{%   if epel.testing %}
+{%     for entry in epel.testing_disabled %}
+disable_{{ entry }}:
+  file.replace:
+    - name: /etc/yum.repos.d/epel-testing.repo
+    - pattern: '\[{{ entry }}\](.*?)enabled=[01]'
+    - repl: '[{{ entry }}]\1enabled=0'
+    - flags: ['DOTALL']
+{%     endfor %}
+{%     for entry in epel.testing_enabled %}
+enable_{{ entry }}:
+  file.replace:
+    - name: /etc/yum.repos.d/epel-testing.repo
+    - pattern: '\[{{ entry }}\](.*?)enabled=[01]'
+    - repl: '[{{ entry }}]\1enabled=1'
+    - flags: ['DOTALL']
+{%     endfor %}
+{%   endif %}
+
 {% endif %}
