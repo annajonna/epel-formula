@@ -3,10 +3,13 @@
 {% set epel = salt['grains.filter_by']({
   'common': {
     'enabled': ['epel'],
-    'disabled': ['epel-debuginfo', 'epel-source'],
-    'testing': false,
-    'testing_enabled': ['epel-testing'],
-    'testing_disabled': ['epel-testing-debuginfo', 'epel-testing-source']
+    'disabled': [
+      'epel-debuginfo',
+      'epel-source',
+      'epel-testing',
+      'epel-testing-debuginfo',
+      'epel-testing-source'
+    ],
   },
   'Amazon': {
     'key': 'https://fedoraproject.org/static/0608B895.txt',
