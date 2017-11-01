@@ -12,26 +12,44 @@
     'key': 'https://fedoraproject.org/static/0608B895.txt',
     'key_hash': 'sha256=16d35fa467c6efcee21d3aa068a02054b6a89a7a33bffa94db1fc141693d62a3',
     'key_name': 'RPM-GPG-KEY-EPEL-6',
-    'rpm': 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm',
+    'rpm': 'https://download.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm',
   },
   'RedHat': salt['grains.filter_by']({
+    5: {
+      'key': 'https://getfedora.org/static/217521F6.txt',
+      'key_hash': 'sha256=664c06f579d914f2cf25d05d4d581b8ddec77cae4f72f4020c3a9264b9d5ee71',
+      'key_name': 'RPM-GPG-KEY-EPEL-5',
+      'rpm': 'https://download.fedoraproject.org/pub/epel/epel-release-latest-5.noarch.rpm',
+    },
     '5': {
       'key': 'https://getfedora.org/static/217521F6.txt',
       'key_hash': 'sha256=664c06f579d914f2cf25d05d4d581b8ddec77cae4f72f4020c3a9264b9d5ee71',
       'key_name': 'RPM-GPG-KEY-EPEL-5',
-      'rpm': 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-5.noarch.rpm',
+      'rpm': 'https://download.fedoraproject.org/pub/epel/epel-release-latest-5.noarch.rpm',
+    },
+    6: {
+      'key': 'https://getfedora.org/static/0608B895.txt',
+      'key_hash': 'sha256=16d35fa467c6efcee21d3aa068a02054b6a89a7a33bffa94db1fc141693d62a3',
+      'key_name': 'RPM-GPG-KEY-EPEL-6',
+      'rpm': 'https://download.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm',
     },
     '6': {
       'key': 'https://getfedora.org/static/0608B895.txt',
       'key_hash': 'sha256=16d35fa467c6efcee21d3aa068a02054b6a89a7a33bffa94db1fc141693d62a3',
       'key_name': 'RPM-GPG-KEY-EPEL-6',
-      'rpm': 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm',
+      'rpm': 'https://download.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm',
+    },
+    7: {
+      'key': 'https://getfedora.org/static/352C64E5.txt',
+      'key_hash': 'sha256=22f25ad95d5e8d371760815485dba696ea3002fc2c7f812f2c75276853387107',
+      'key_name': 'RPM-GPG-KEY-EPEL-7',
+      'rpm': 'https://download.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
     },
     '7': {
       'key': 'https://getfedora.org/static/352C64E5.txt',
       'key_hash': 'sha256=22f25ad95d5e8d371760815485dba696ea3002fc2c7f812f2c75276853387107',
       'key_name': 'RPM-GPG-KEY-EPEL-7',
-      'rpm': 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
+      'rpm': 'https://download.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
     },
   }, grain='osmajorrelease'),
 }, grain='os', merge=salt['pillar.get']('epel:lookup'), default='RedHat', base='common') -%}
