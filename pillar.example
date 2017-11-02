@@ -1,10 +1,18 @@
 epel:
-  # URL to the EPEL RPM to install
-  rpm: default varies with OS; see epel/init.sls
+  lookup:
+    # URL to the EPEL RPM to install
+    rpm: default varies with OS; see epel/init.sls
 
-  # URL to the EPEL GPG key
-  pubkey: default varies with OS; see epel/init.sls
-  pubkey_hash: default varies with OS; see epel/init.sls
+    # URL to the EPEL GPG key
+    key: default varies with OS; see epel/map.jinja
+    key_hash: default varies with OS; see epel/map.jinja
 
-  # Disable repo so requires the --enablerepo flag to use
-  disabled: false
+    # filename for the local EPEL Key
+    key_name: default varies with OS; see epel/map.jinja
+
+    # Disable repo so requires the --enablerepo flag to use
+    enabled: ['epel']
+    disabled: ['epel-debuginfo', 'epel-source']
+    testing: true
+    testing_enabled: ['epel-testing']
+    testing_disabled: ['epel-testing-debuginfo', 'epel-testing-source']
